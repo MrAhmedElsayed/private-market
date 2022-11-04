@@ -1,11 +1,14 @@
 <script>
 export default {
   name: "LoginView",
-  data: () => ({
-    username: "",
-    password: "",
-  }),
 };
+</script>
+
+<script setup>
+import { ref } from "vue";
+
+const email = ref("");
+const password = ref("");
 </script>
 
 <template>
@@ -41,9 +44,8 @@ export default {
                       >Email</label
                     >
                     <input
+                      v-model="email"
                       type="email"
-                      name="email"
-                      id="email"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       placeholder="name@mail.com"
                       required=""
@@ -56,9 +58,8 @@ export default {
                       >Password</label
                     >
                     <input
-                      v-bind="password"
+                      v-model="password"
                       type="password"
-                      name="password"
                       placeholder="••••••••"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       required=""
@@ -163,10 +164,10 @@ export default {
                       >Remember me</label
                     >
                   </div>
-                  <a
-                    href="#"
+                  <router-link
+                    to="/reset-password"
                     class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
-                    >Lost Password?</a
+                    >Lost Password?</router-link
                   >
                 </div>
                 <button
@@ -179,10 +180,10 @@ export default {
                   class="text-sm font-medium text-gray-500 dark:text-gray-300"
                 >
                   Not registered?
-                  <a
-                    href="#"
+                  <router-link
+                    to="/register"
                     class="text-blue-700 hover:underline dark:text-blue-500"
-                    >Create account</a
+                    >Create account</router-link
                   >
                 </div>
               </form>
