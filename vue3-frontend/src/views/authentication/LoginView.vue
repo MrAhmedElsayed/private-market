@@ -37,7 +37,7 @@ function loginSubmit() {
                 <!-- error alert -->
                 <div
                   v-if="alertError"
-                  class="absolute top-0 flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200"
+                  class="absolute -top-7 flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200"
                   role="alert"
                 >
                   <svg
