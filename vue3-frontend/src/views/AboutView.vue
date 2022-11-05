@@ -68,6 +68,12 @@
   </TransitionRoot>
 </template>
 
+<script>
+export default {
+  name: "AboutView",
+};
+</script>
+
 <script setup>
 import { ref } from "vue";
 import {

@@ -5,10 +5,21 @@ export default {
 </script>
 
 <script setup>
+import { LockClosedIcon } from "@heroicons/vue/20/solid";
 import { ref } from "vue";
 
-const email = ref("");
-const password = ref("");
+const loading = ref(false);
+const alertError = ref(false);
+const email = ref("ahmed@mail.com");
+const password = ref("12345");
+
+function loginSubmit() {
+  console.log(loading.value);
+
+  setTimeout(() => {
+    console.log(email.value, password.value);
+  }, 3000);
+}
 </script>
 
 <template>
@@ -22,7 +33,58 @@ const password = ref("");
             <div
               class="mx-auto p-4 w-full max-w-lg bg-white rounded-lg border border-gray-200 shadow-md sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
             >
-              <form class="space-y-6" action="#">
+              <form class="relative space-y-6" @submit.prevent="loginSubmit">
+                <!-- error alert -->
+                <div
+                  v-if="alertError"
+                  class="absolute top-0 flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200"
+                  role="alert"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="flex-shrink-0 w-5 h-5 text-red-700 dark:text-red-800"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                  <span class="sr-only">Info</span>
+                  <div
+                    class="ml-3 text-sm font-medium text-red-700 dark:text-red-800"
+                  >
+                    A simple info alert with an
+                    <a
+                      href="#"
+                      class="font-semibold underline hover:text-red-800 dark:hover:text-red-900"
+                      >example link</a
+                    >. Give it a click if you like.
+                  </div>
+                  <button
+                    type="button"
+                    class="ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-red-200 dark:text-red-600 dark:hover:bg-red-300"
+                    data-dismiss-target="#alert-2"
+                    aria-label="Close"
+                  >
+                    <span class="sr-only">Close</span>
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
                 <img
                   class="mx-auto"
                   src="@/assets/images/market-22.svg"
@@ -31,7 +93,7 @@ const password = ref("");
                   alt="my image"
                 />
                 <h1
-                  class="righteous-font text-2xl font-medium text-gray-900 dark:text-white my-2"
+                  class="righteous-font text-2xl font-medium text-indigo-900 dark:text-white my-2"
                 >
                   Welcome Back
                 </h1>
@@ -67,86 +129,6 @@ const password = ref("");
                   </div>
                 </div>
 
-                <div class="flex items-center py-0">
-                  <div class="w-full h-0.5 bg-gray-200"></div>
-                  <div class="px-5 text-center text-gray-400">or</div>
-                  <div class="w-full h-0.5 bg-gray-200"></div>
-                </div>
-
-                <div class="flex items-center py-0 my-0">
-                  <button
-                    type="button"
-                    class="w-full text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2"
-                  >
-                    <svg
-                      class="mr-2 -ml-1 w-6 h-5"
-                      viewBox="0 0 21 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g clip-path="url(#clip0_13183_10121)">
-                        <path
-                          d="M20.3081 10.2303C20.3081 9.55056 20.253 8.86711 20.1354 8.19836H10.7031V12.0492H16.1046C15.8804 13.2911 15.1602 14.3898 14.1057 15.0879V17.5866H17.3282C19.2205 15.8449 20.3081 13.2728 20.3081 10.2303Z"
-                          fill="#3F83F8"
-                        ></path>
-                        <path
-                          d="M10.7019 20.0006C13.3989 20.0006 15.6734 19.1151 17.3306 17.5865L14.1081 15.0879C13.2115 15.6979 12.0541 16.0433 10.7056 16.0433C8.09669 16.0433 5.88468 14.2832 5.091 11.9169H1.76562V14.4927C3.46322 17.8695 6.92087 20.0006 10.7019 20.0006V20.0006Z"
-                          fill="#34A853"
-                        ></path>
-                        <path
-                          d="M5.08857 11.9169C4.66969 10.6749 4.66969 9.33008 5.08857 8.08811V5.51233H1.76688C0.348541 8.33798 0.348541 11.667 1.76688 14.4927L5.08857 11.9169V11.9169Z"
-                          fill="#FBBC04"
-                        ></path>
-                        <path
-                          d="M10.7019 3.95805C12.1276 3.936 13.5055 4.47247 14.538 5.45722L17.393 2.60218C15.5852 0.904587 13.1858 -0.0287217 10.7019 0.000673888C6.92087 0.000673888 3.46322 2.13185 1.76562 5.51234L5.08732 8.08813C5.87733 5.71811 8.09302 3.95805 10.7019 3.95805V3.95805Z"
-                          fill="#EA4335"
-                        ></path>
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_13183_10121">
-                          <rect
-                            width="20"
-                            height="20"
-                            fill="white"
-                            transform="translate(0.5)"
-                          ></rect>
-                        </clipPath>
-                      </defs>
-                    </svg>
-
-                    sign in with Google
-                  </button>
-                  <button
-                    type="button"
-                    class="w-full text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2"
-                  >
-                    <svg
-                      class="mr-2 -ml-1 w-6 h-5"
-                      viewBox="0 0 21 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g clip-path="url(#clip0_13183_29163)">
-                        <path
-                          d="M18.6574 15.5863C18.3549 16.2851 17.9969 16.9283 17.5821 17.5196C17.0167 18.3257 16.5537 18.8838 16.1969 19.1936C15.6439 19.7022 15.0513 19.9627 14.4168 19.9775C13.9612 19.9775 13.4119 19.8479 12.7724 19.585C12.1308 19.3232 11.5412 19.1936 11.0021 19.1936C10.4366 19.1936 9.83024 19.3232 9.18162 19.585C8.53201 19.8479 8.00869 19.985 7.60858 19.9985C7.00008 20.0245 6.39356 19.7566 5.78814 19.1936C5.40174 18.8566 4.91842 18.2788 4.33942 17.4603C3.71821 16.5863 3.20749 15.5727 2.80738 14.4172C2.37887 13.1691 2.16406 11.9605 2.16406 10.7904C2.16406 9.45009 2.45368 8.29407 3.03379 7.32534C3.4897 6.54721 4.09622 5.9334 4.85533 5.4828C5.61445 5.03219 6.43467 4.80257 7.31797 4.78788C7.80129 4.78788 8.4351 4.93738 9.22273 5.2312C10.0081 5.52601 10.5124 5.67551 10.7335 5.67551C10.8988 5.67551 11.4591 5.5007 12.4088 5.15219C13.3069 4.82899 14.0649 4.69517 14.6859 4.74788C16.3685 4.88368 17.6327 5.54699 18.4734 6.74202C16.9685 7.65384 16.2241 8.93097 16.2389 10.5693C16.2525 11.8454 16.7154 12.9074 17.6253 13.7506C18.0376 14.1419 18.4981 14.4444 19.0104 14.6592C18.8993 14.9814 18.7821 15.29 18.6574 15.5863V15.5863ZM14.7982 0.400358C14.7982 1.40059 14.4328 2.3345 13.7044 3.19892C12.8254 4.22654 11.7623 4.82035 10.6093 4.72665C10.5947 4.60665 10.5861 4.48036 10.5861 4.34765C10.5861 3.38743 11.0041 2.3598 11.7465 1.51958C12.1171 1.09416 12.5884 0.740434 13.16 0.458257C13.7304 0.18029 14.2698 0.0265683 14.7772 0.000244141C14.7921 0.133959 14.7982 0.267682 14.7982 0.400345V0.400358Z"
-                          fill="currentColor"
-                        ></path>
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_13183_29163">
-                          <rect
-                            width="20"
-                            height="20"
-                            fill="white"
-                            transform="translate(0.5)"
-                          ></rect>
-                        </clipPath>
-                      </defs>
-                    </svg>
-                    sign in with Apple
-                  </button>
-                </div>
-
                 <div class="flex items-start">
                   <div class="flex items-start">
                     <div class="flex items-center h-5">
@@ -155,7 +137,6 @@ const password = ref("");
                         type="checkbox"
                         value=""
                         class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                        required=""
                       />
                     </div>
                     <label
@@ -167,15 +148,100 @@ const password = ref("");
                   <router-link
                     to="/reset-password"
                     class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
-                    >Lost Password?</router-link
+                    >Forgot your Password?</router-link
                   >
                 </div>
                 <button
                   type="submit"
-                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                  Login to your account
+                  <span
+                    class="absolute inset-y-0 left-0 flex items-center pl-3"
+                  >
+                    <svg
+                      v-if="loading"
+                      aria-hidden="true"
+                      role="status"
+                      class="inline mr-3 w-5 h-5 text-white animate-spin"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="#E5E7EB"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                    <LockClosedIcon
+                      v-else
+                      class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  Sign in
                 </button>
+                <div class="flex items-center py-0">
+                  <div class="w-full h-0.5 bg-gray-200"></div>
+                  <div class="w-full px-5 text-center text-gray-400 text-sm">
+                    Or continue with
+                  </div>
+                  <div class="w-full h-0.5 bg-gray-200"></div>
+                </div>
+
+                <div class="flex items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    class="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 mr-2 mb-2"
+                  >
+                    <svg
+                      class="mr-2 -ml-1 w-4 h-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 320 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="m279.1 288 14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"
+                      />
+                    </svg>
+                    Facebook
+                  </button>
+                  <button
+                    type="button"
+                    class="text-white bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#050708]/50 dark:hover:bg-[#050708]/30 mr-2 mb-2"
+                  >
+                    <svg
+                      class="mr-2 -ml-1 w-5 h-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 384 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"
+                      />
+                    </svg>
+                    Apple
+                  </button>
+                  <button
+                    type="button"
+                    class="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2"
+                  >
+                    <svg
+                      class="mr-2 -ml-1 w-4 h-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 488 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
+                      />
+                    </svg>
+                    Google
+                  </button>
+                </div>
                 <div
                   class="text-sm font-medium text-gray-500 dark:text-gray-300"
                 >
@@ -190,9 +256,8 @@ const password = ref("");
             </div>
           </div>
         </div>
-
         <div
-          class="mx-auto w-full lg:w-5/12 px-4 flex flex-col content-between relative"
+          class="hidden md:flex flex-col mx-auto w-full lg:w-5/12 px-4 content-between relative"
         >
           <img
             src="@/assets/images/dgracemarket-1.svg"
@@ -200,7 +265,7 @@ const password = ref("");
             class="absolute bottom-28 left-5 filter -rotate-45"
             width="100"
           />
-          <div class="flex items-center justify-center">
+          <div class="flex items-center">
             <img
               src="@/assets/images/web_shopping.svg"
               alt="hero"
