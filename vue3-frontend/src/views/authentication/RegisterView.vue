@@ -41,7 +41,7 @@ async function registerSubmit() {
   <section
     class="inter-font mx-auto max-w-7xl py-2 sm:px-6 lg:px-8 select-none"
   >
-    <div class="relative p-5 pt-6 pb-5 bg-white">
+    <div class="relative p-5 pt-6 pb-5 bg-gray-100">
       <div class="flex flex-wrap -mx-4 gap-16">
         <div class="w-full lg:w-6/12">
           <div
