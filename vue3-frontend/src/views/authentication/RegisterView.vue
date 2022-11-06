@@ -7,6 +7,9 @@ export default {
 <script setup>
 import { ref } from "vue";
 import { LockClosedIcon } from "@heroicons/vue/20/solid";
+import axios from "axios";
+import "@/utils/axiosConfig.js";
+import router from "@/router";
 
 const email = ref("");
 const username = ref("");
@@ -16,12 +19,21 @@ const confirm_password = ref("");
 const loading = ref(false);
 const alertError = ref(false);
 
-function registerSubmit() {
-  console.log(loading.value);
-
-  setTimeout(() => {
-    console.log(email.value, password.value);
-  }, 3000);
+async function registerSubmit() {
+  await axios
+    .post("/auth/users/", {
+      email: email.value,
+      username: username.value,
+      password: password.value,
+      re_password: confirm_password.value,
+    })
+    .then(function (response) {
+      console.log(response);
+      router.push("/login");
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 </script>
 <!-- https://flowbite.com/blocks/marketing/register/ -->

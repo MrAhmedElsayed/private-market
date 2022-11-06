@@ -7,18 +7,31 @@ export default {
 <script setup>
 import { LockClosedIcon } from "@heroicons/vue/20/solid";
 import { ref } from "vue";
+import axios from "axios";
+import "@/utils/axiosConfig.js";
+import router from "@/router";
 
 const loading = ref(false);
-const alertError = ref(false);
-const email = ref("ahmed@mail.com");
-const password = ref("12345");
+let alertError = ref(false);
+let alertMessage = ref("");
+const email = ref("");
+const password = ref("");
 
-function loginSubmit() {
-  console.log(loading.value);
-
-  setTimeout(() => {
-    console.log(email.value, password.value);
-  }, 3000);
+async function loginSubmit() {
+  await axios
+    .post("/auth/jwt/create/", {
+      username: email.value,
+      password: password.value,
+    })
+    .then(function (response) {
+      console.log(response);
+      router.push("/");
+    })
+    .catch(function (error) {
+      console.log(error);
+      alertError.value = true;
+      alertMessage.value = "There is an error in the username or password";
+    });
 }
 </script>
 
@@ -53,19 +66,15 @@ function loginSubmit() {
                       clip-rule="evenodd"
                     ></path>
                   </svg>
-                  <span class="sr-only">Info</span>
+                  <span class="sr-only">Error</span>
                   <div
                     class="ml-3 text-sm font-medium text-red-700 dark:text-red-800"
                   >
-                    A simple info alert with an
-                    <a
-                      href="#"
-                      class="font-semibold underline hover:text-red-800 dark:hover:text-red-900"
-                      >example link</a
-                    >. Give it a click if you like.
+                    {{ alertMessage }}
                   </div>
                   <button
                     type="button"
+                    @click="alertError = !alertError"
                     class="ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-red-200 dark:text-red-600 dark:hover:bg-red-300"
                     data-dismiss-target="#alert-2"
                     aria-label="Close"
@@ -103,11 +112,11 @@ function loginSubmit() {
                     <label
                       for="email"
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                      >Email</label
+                      >Username</label
                     >
                     <input
                       v-model="email"
-                      type="email"
+                      type="text"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       placeholder="name@mail.com"
                       required=""
